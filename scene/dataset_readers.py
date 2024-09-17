@@ -94,7 +94,7 @@ def readColmapCameras(cam_extrinsics, cam_intrinsics, images_folder):
         else:
             assert False, "Colmap camera model not handled: only undistorted datasets (PINHOLE or SIMPLE_PINHOLE cameras) supported!"
 
-        image_path = os.path.join(images_folder, os.path.basename(extr.name))
+        image_path = os.path.join(images_folder, extr.name)
         image_name = os.path.basename(image_path).split(".")[0]
         image = Image.open(image_path)
 
@@ -135,7 +135,8 @@ def readColmapSceneInfo(path, images, eval, llffhold=8):
         cameras_intrinsic_file = os.path.join(path, "sparse/0", "cameras.bin")
         cam_extrinsics = read_extrinsics_binary(cameras_extrinsic_file)
         cam_intrinsics = read_intrinsics_binary(cameras_intrinsic_file)
-    except:
+    except Exception as e:
+        print(str(e))
         cameras_extrinsic_file = os.path.join(path, "sparse/0", "images.txt")
         cameras_intrinsic_file = os.path.join(path, "sparse/0", "cameras.txt")
         cam_extrinsics = read_extrinsics_text(cameras_extrinsic_file)
@@ -177,6 +178,9 @@ def readColmapSceneInfo(path, images, eval, llffhold=8):
     return scene_info
 
 def readCamerasFromTransforms(path, transformsfile, white_background, extension=".png"):
+    # temp 
+    extension = ""
+    # temp
     cam_infos = []
 
     with open(os.path.join(path, transformsfile)) as json_file:
@@ -265,11 +269,12 @@ def readNerfStudioCameras(path, transformsfile, white_background):
     return cam_infos
 
 def readNerfStudioSceneInfo(path, white_background, eval):
-    cam_infos = readNerfStudioCameras(path, "transforms.json", white_background)
+    cam_infos = readNerfStudioCameras(path, "transforms_marker.json", white_background)
     train_cam_infos = cam_infos
     test_cam_infos = []
     nerf_normalization = getNerfppNorm(train_cam_infos)
-    ply_path = os.path.join(path, "point_cloud.ply")
+    # ply_path = os.path.join(path, "point_cloud.ply")
+    ply_path = os.path.join(path, "init.ply")
     if not os.path.exists(ply_path):
         # Since this data set has no colmap data, we start with random points
         num_pts = 100_000
@@ -287,6 +292,7 @@ def readNerfStudioSceneInfo(path, white_background, eval):
         print(e)
         try:
             pcd = fetchPlybyOpen3d(ply_path)
+            print("Using open3d to read ply file")
         except Exception as e:
             print(e)
             pcd = None

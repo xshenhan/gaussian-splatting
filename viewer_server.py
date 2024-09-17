@@ -6,7 +6,7 @@ app = sanic.Sanic("Viewer")
 
 @app.route('/<path:path>')
 async def catch_all(request, path):
-    file_path = join('/home/pjlab/main/real2sim/gaussian-splatting/splat', path)
+    file_path = join('/home/pjlab/main/real2sim/gaussian-splatting', path)
     # 如果请求的是静态文件，则返回该文件
     if isfile(file_path):
         return await file(file_path, headers={"Access-Control-Allow-Origin": "*"}, status=200)
