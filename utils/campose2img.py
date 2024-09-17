@@ -57,7 +57,7 @@ def main():
                      [ 0, 0,  0, 1]])
     tmp = np.linalg.inv(tmp)
     gaussians = GaussianModel(3)
-    gaussians.load_ply("/home/pjlab/main/real2sim/assets/data/new/mix2/gs-output/1/point_cloud/iteration_30000/point_cloud.ply")
+    gaussians.load_ply("/ssd/hanxiaoshen/main/gaussian-splatting/data/new/mix2/gs-output/1/point_cloud/iteration_30000/point_cloud.ply")
     pipeline = SimplePipeline()
     contorl_tmp_data = np.ones((12,), dtype=np.float64)
     data_shm = shared_memory.SharedMemory(create=True, size=tmp_data.nbytes, name="data_psm_08d5dd701")
