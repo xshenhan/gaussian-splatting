@@ -9,10 +9,16 @@
 # For inquiries contact  george.drettakis@inria.fr
 #
 
-from scene.cameras import Camera
-import numpy as np
-from utils.general_utils import PILtoTorch
-from utils.graphics_utils import fov2focal
+try:
+    from scene.cameras import Camera
+    import numpy as np
+    from utils.general_utils import PILtoTorch
+    from utils.graphics_utils import fov2focal
+except:
+    from src.gaussian_splatting.scene.cameras import Camera
+    import numpy as np
+    from src.gaussian_splatting.utils.general_utils import PILtoTorch
+    from src.gaussian_splatting.utils.graphics_utils import fov2focal
 
 WARNED = False
 

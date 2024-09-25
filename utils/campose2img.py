@@ -1,10 +1,6 @@
 import os
 import torch
 import numpy as np
-import matplotlib.pyplot as plt
-import open3d as o3d
-from pytorch3d.io import load_objs_as_meshes
-from typing import NamedTuple
 
 from gaussian_renderer import render
 import json

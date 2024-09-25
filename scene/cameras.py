@@ -12,8 +12,11 @@
 import torch
 from torch import nn
 import numpy as np
-from utils.graphics_utils import getWorld2View2, getProjectionMatrix
-
+try:
+    from utils.graphics_utils import getWorld2View2, getProjectionMatrix
+except:
+    from src.gaussian_splatting.utils.graphics_utils import getWorld2View2, getProjectionMatrix
+    
 class Camera(nn.Module):
     def __init__(self, colmap_id, R, T, FoVx, FoVy, image, gt_alpha_mask,
                  image_name, uid,

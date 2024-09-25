@@ -164,5 +164,28 @@ def main():
     # 可视化
     o3d.visualization.draw_geometries([merged_pcd])
 
+
+def main_for_polycam():
+    from pathlib import Path
+    import json
+    root_dir = "/home/pjlab/main/real2sim/gaussian-splatting/data/items/orange-bottle/item-polycam-9-21-1/keyframes"
+    root_dir = Path(root_dir)
+    depth_root_dir = root_dir / "depth"
+    image_root_dir = root_dir / "corrected_images"
+    camera_dir = root_dir / "corrected_cameras"
+    names = [i.name for i in image_root_dir.iterdir()]
+    names.sort(key=lambda x: int(os.path.splitext(x)[0]))
+    for name in names:
+        image_path = image_root_dir / name
+        depth_path = depth_root_dir / name.replace("jpg", "png")
+        camera_path = camera_dir / name.replace("jpg", "json")
+        with open(camera_path, 'r') as file:
+            camera_info = json.load(file)
+        depth = cv2.imread(str(depth_path), cv2.IMREAD_UNCHANGED)
+        image = cv2.imread(str(image_path))
+        print(depth.shape)
+        print(image.shape)
+
+
 if __name__ == "__main__":
-    main()
+    main_for_polycam()

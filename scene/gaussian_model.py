@@ -11,15 +11,27 @@
 
 import torch
 import numpy as np
-from utils.general_utils import inverse_sigmoid, get_expon_lr_func, build_rotation
-from torch import nn
-import os
-from utils.system_utils import mkdir_p
-from plyfile import PlyData, PlyElement
-from utils.sh_utils import RGB2SH
-from simple_knn._C import distCUDA2
-from utils.graphics_utils import BasicPointCloud
-from utils.general_utils import strip_symmetric, build_scaling_rotation
+try:
+    from utils.general_utils import inverse_sigmoid, get_expon_lr_func, build_rotation
+    from torch import nn
+    import os
+    from utils.system_utils import mkdir_p
+    from plyfile import PlyData, PlyElement
+    from utils.sh_utils import RGB2SH
+    from simple_knn._C import distCUDA2
+    from utils.graphics_utils import BasicPointCloud
+    from utils.general_utils import strip_symmetric, build_scaling_rotation
+except:
+    from src.gaussian_splatting.utils.general_utils import inverse_sigmoid, get_expon_lr_func, build_rotation
+    from torch import nn
+    import os
+    from src.gaussian_splatting.utils.system_utils import mkdir_p
+    from plyfile import PlyData, PlyElement
+    from src.gaussian_splatting.utils.sh_utils import RGB2SH
+    from simple_knn._C import distCUDA2
+    from src.gaussian_splatting.utils.graphics_utils import BasicPointCloud
+    from src.gaussian_splatting.utils.general_utils import strip_symmetric, build_scaling_rotation
+    
 
 class GaussianModel:
 
